@@ -32,14 +32,14 @@ export function changeUsername(name) {
 }
 
 export function getAllArticles() {
-  console.log("in getAllArticles action ");
+  console.log('in getAllArticles action ');
   return {
     type: GET_ARTICLES,
   };
 }
 
 export function getAllArticlesResponse(data) {
-  console.log("in received getAllArticles action ");
+  console.log('in received getAllArticles action ');
   return {
     type: RECEIVED_ARTICLES,
     data,

@@ -20,16 +20,16 @@ import {
   makeSelectError,
 } from 'containers/App/selectors';
 import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
-import AtPrefix from './AtPrefix';
+// import ReposList from 'components/ReposList';
+// import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
-import Section from './Section';
+// import Form from './Form';
+// import Input from './Input';
+// import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername, getAllArticles } from './actions';
-import { makeSelectUsername, getArticlesSelect } from './selectors';
+// import { loadRepos } from '../App/actions';
+import { getAllArticles } from './actions';
+import { getArticlesSelect } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -40,18 +40,18 @@ export class HomePage extends React.PureComponent {
    */
   componentDidMount() {
     this.props.getAllArticles();
-    /*if (this.props.username && this.props.username.trim().length > 0) {
+    /* if (this.props.username && this.props.username.trim().length > 0) {
       this.props.onSubmitForm();
-    }*/
+    } */
   }
 
   render() {
-    const { loading, error, repos } = this.props;
-    const reposListProps = {
+    // const { loading, error, repos } = this.props;
+    /* const reposListProps = {
       loading,
       error,
       repos,
-    };
+    }; */
 
     return (
       <article>
@@ -69,8 +69,8 @@ export class HomePage extends React.PureComponent {
             </H2>
           </CenteredSection>
           <div>
-            <button onClick={this.props.fetchArticle}>get all articles</button>
-            <h3>Title:</h3><h3>{this.props.data}</h3>
+            <h3>Title:</h3>
+            <h3>{this.props.data}</h3>
             <h4>Description:</h4>
             <h4>authors:</h4>
             <h4>tags:</h4>
@@ -94,14 +94,14 @@ HomePage.propTypes = {
   getAllArticles: PropTypes.func,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps() {
   return {
-    getAllArticles: getAllArticles,
+    getAllArticles,
     // onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-    /*onSubmitForm: evt => {
+    /* onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadRepos());
-    },*/
+    }, */
   };
 }
 
