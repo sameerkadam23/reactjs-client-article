@@ -27,6 +27,9 @@ const makeSelectLocation = () =>
     routerState.get('location').toJS(),
   );
 
+const getArticlesSelect = () =>
+  createSelector(selectGlobal, globalState => globalState.get('data'));
+
 export {
   selectGlobal,
   makeSelectCurrentUser,
@@ -34,4 +37,5 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
+  getArticlesSelect,
 };

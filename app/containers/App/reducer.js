@@ -13,6 +13,7 @@
 import { fromJS } from 'immutable';
 
 import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
+import { GET_ARTICLES, RECEIVED_ARTICLES } from '../HomePage/constants';
 
 // The initial state of the App
 const initialState = fromJS({
@@ -26,6 +27,10 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_ARTICLES:
+      return state;
+    case RECEIVED_ARTICLES:
+      return state.set('data', action.data);
     case LOAD_REPOS:
       return state
         .set('loading', true)

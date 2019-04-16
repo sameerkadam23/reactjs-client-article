@@ -3,13 +3,16 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-// import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+import { LOAD_REPOS } from 'containers/App/constants';
+import {
+  reposLoaded,
+  repoLoadingError,
+  getAllArticlesResponse,
+} from 'containers/App/actions';
 
 import request from 'utils/request';
 import { makeSelectUsername } from 'containers/HomePage/selectors';
 import { GET_ARTICLES } from './constants';
-import { getAllArticlesResponse } from './actions';
 
 /**
  * Github repos request/response handler
@@ -29,12 +32,10 @@ export function* getRepos() {
 }
 
 export function* getArticlesData() {
-  console.log('in Saga');
   const getArticlesApiURL = 'http://localhost:8080/getAllArticles';
   try {
     // do api call
     const data = yield call(request, getArticlesApiURL);
-    console.log('in Saga1');
     yield put(getAllArticlesResponse(data));
   } catch (err) {
     console.log(err);
@@ -48,6 +49,6 @@ export default function* githubData() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  // yield takeLatest(LOAD_REPOS, getRepos),
+  yield takeLatest(LOAD_REPOS, getRepos);
   yield takeLatest(GET_ARTICLES, getArticlesData);
 }

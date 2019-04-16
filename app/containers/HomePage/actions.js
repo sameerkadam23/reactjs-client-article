@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_USERNAME, GET_ARTICLES, RECEIVED_ARTICLES } from './constants';
+import { CHANGE_USERNAME } from './constants';
 
 /**
  * Changes the input field of the form
@@ -28,20 +28,5 @@ export function changeUsername(name) {
   return {
     type: CHANGE_USERNAME,
     name,
-  };
-}
-
-export function getAllArticles() {
-  console.log('in getAllArticles action ');
-  return {
-    type: GET_ARTICLES,
-  };
-}
-
-export function getAllArticlesResponse(data) {
-  console.log('in received getAllArticles action ');
-  return {
-    type: RECEIVED_ARTICLES,
-    data,
   };
 }

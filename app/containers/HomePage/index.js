@@ -20,16 +20,16 @@ import {
   makeSelectError,
 } from 'containers/App/selectors';
 import H2 from 'components/H2';
-// import ReposList from 'components/ReposList';
-// import AtPrefix from './AtPrefix';
+import ReposList from 'components/ReposList';
+import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
-// import Form from './Form';
-// import Input from './Input';
-// import Section from './Section';
+import Form from './Form';
+import Input from './Input';
+import Section from './Section';
 import messages from './messages';
-// import { loadRepos } from '../App/actions';
-import { getAllArticles } from './actions';
-import { getArticlesSelect } from './selectors';
+import { loadRepos } from '../App/actions';
+import { changeUsername } from './actions';
+import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -39,19 +39,18 @@ export class HomePage extends React.PureComponent {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    this.props.getAllArticles();
-    /* if (this.props.username && this.props.username.trim().length > 0) {
+    if (this.props.username && this.props.username.trim().length > 0) {
       this.props.onSubmitForm();
-    } */
+    }
   }
 
   render() {
-    // const { loading, error, repos } = this.props;
-    /* const reposListProps = {
+    const { loading, error, repos } = this.props;
+    const reposListProps = {
       loading,
       error,
       repos,
-    }; */
+    };
 
     return (
       <article>
@@ -67,16 +66,31 @@ export class HomePage extends React.PureComponent {
             <H2>
               <FormattedMessage {...messages.startProjectHeader} />
             </H2>
+            <p>
+              <FormattedMessage {...messages.startProjectMessage} />
+            </p>
           </CenteredSection>
-          <div>
-            <h3>Title:</h3>
-            <h3>{this.props.data}</h3>
-            <h4>Description:</h4>
-            <h4>authors:</h4>
-            <h4>tags:</h4>
-            <h4>Created Date:</h4>
-            <h4>last Updated Date:</h4>
-          </div>
+          <Section>
+            <H2>
+              <FormattedMessage {...messages.trymeHeader} />
+            </H2>
+            <Form onSubmit={this.props.onSubmitForm}>
+              <label htmlFor="username">
+                <FormattedMessage {...messages.trymeMessage} />
+                <AtPrefix>
+                  <FormattedMessage {...messages.trymeAtPrefix} />
+                </AtPrefix>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="mxstbr"
+                  value={this.props.username}
+                  onChange={this.props.onChangeUsername}
+                />
+              </label>
+            </Form>
+            <ReposList {...reposListProps} />
+          </Section>
         </div>
       </article>
     );
@@ -87,30 +101,26 @@ HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // onSubmitForm: PropTypes.func,
-  // username: PropTypes.string,
-  // onChangeUsername: PropTypes.func,
-  fetchArticle: PropTypes.func,
-  getAllArticles: PropTypes.func,
+  onSubmitForm: PropTypes.func,
+  username: PropTypes.string,
+  onChangeUsername: PropTypes.func,
 };
 
-export function mapDispatchToProps() {
+export function mapDispatchToProps(dispatch) {
   return {
-    getAllArticles,
-    // onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-    /* onSubmitForm: evt => {
+    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadRepos());
-    }, */
+    },
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   repos: makeSelectRepos(),
-  // username: makeSelectUsername(),
+  username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  data: getArticlesSelect(),
 });
 
 const withConnect = connect(
