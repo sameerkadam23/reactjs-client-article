@@ -32,7 +32,8 @@ export function* getRepos() {
 }
 
 export function* getArticlesData() {
-  const getArticlesApiURL = 'http://localhost:8080/getAllArticles';
+  // const getArticlesApiURL = 'http://localhost:8080/getAllArticles';
+  const getArticlesApiURL = 'http://localhost:8000/articles/';
   try {
     // do api call
     const data = yield call(request, getArticlesApiURL);
